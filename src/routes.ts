@@ -1,24 +1,29 @@
 import {app} from '../index';
+import express from 'express';
+
+export const router = express.Router();
+
 import { createSignUp, signUpController } from './controller/signupController';
 import { validationController } from './controller/validationController';
 import { revalidationController } from './controller/revalidationController';
 import { signInController } from './controller/signinController';
+import { callbackGoogleController, signInGoogleController } from './controller/signInWithGoogle';
 // import { accessTokenCreator, handleSignIn } from './signIn';
 
-export async function Routers() {
-    app.get('/', (req, res) => {
+// export async function Routers() {
+    router.get('/', (req, res) => {
         res.send('<h1>Welcome!</h1>');
     });
 
-    app.post('/api/v1/signup', signUpController);
+    router.post('/api/v1/signup', signUpController);
 
-    app.get('/api/v1/validate/:code', validationController);
+    router.get('/api/v1/validate/:code', validationController);
 
-    app.get('/api/v1/revalidate', revalidationController);
+    router.get('/api/v1/revalidate', revalidationController);
 
-    app.post('/api/v1/signin', signInController);
+    router.post('/api/v1/signin', signInController);
 
-    // app.get('/signin/validate/:code', async (req, res) => {
+    // router.get('/signin/validate/:code', async (req, res) => {
     //     const paramsCode = req.params.code
     //     const validateCode = await redisClient.get('validationCode')
     //     // Check if code is exipired
@@ -52,4 +57,10 @@ export async function Routers() {
     //         res.end()
     //     }
     // });
-}
+
+    // Initiates the Google Login flow
+    router.get('/auth/google', signInGoogleController);
+
+    // Callback URL for handling the Google Login response
+    router.get('/auth/google/callback', callbackGoogleController)
+// }

@@ -1,10 +1,8 @@
-;
 import crypto from "crypto";
 import cryptoJs from 'crypto-js'
 import path from 'path';
 import ejs from 'ejs'
 import { NextFunction, Request, Response } from 'express';
-
 import { createAccout, userExists } from '../Action';
 import { signUpCredentials } from '../shared/interfaces.d';
 import { redisClient, transporter } from '../shared/connections';

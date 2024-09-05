@@ -1,7 +1,6 @@
 import { signInCredentials, signUpCredentials } from "../shared/interfaces"
 import { prisma } from "../shared/connections"
 
-
 export async function userExists(email: string) {
     const userExists = await prisma.user.findFirst({
         where: {
