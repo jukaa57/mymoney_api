@@ -59,8 +59,8 @@ import { callbackGoogleController, signInGoogleController } from './controller/s
     // });
 
     // Initiates the Google Login flow
-    router.get('/auth/google', signInGoogleController);
+    router.get('/api/v1/auth/google', signInGoogleController);
 
     // Callback URL for handling the Google Login response
-    router.get('/auth/google/callback', callbackGoogleController)
+    router.get('/api/v1/auth/google/callback', callbackGoogleController)
 // }

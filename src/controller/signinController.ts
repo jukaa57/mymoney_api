@@ -13,7 +13,7 @@ export const signInController = async (req: Request, res: Response, next: NextFu
     if(!isExists) return res.status(400).send('Bad Request \n Account not exisits')
     
     const login = await handleSignIn({email, password})
-    if(login == 200 ) return res.status(200).send('Access Successfully')
+    if(login.STATUS_CODES == 200 ) return res.status(200).send({message: 'Access Successfully', accessToken: login.ACCESS_TOKEN})
     // else if(login == 202) return res.status(202).send('Send code to email!!')
     else return res.status(500).send('Bad Request \n Login failed')
 }
@@ -30,11 +30,17 @@ export async function handleSignIn(data: signInCredentials) {
         //     let send = sendEmailSignUpValidation(data.email, validationCode)
         //     return send
         // } else {
-            accessTokenCreator(getAccount)
-            return 200
+            let accessToken = await accessTokenCreator(getAccount)
+            return {
+                STATUS_CODES: 200,
+                ACCESS_TOKEN: accessToken 
+            }
         // }
     } else {
-        return 500
+        return {
+            STATUS_CODES: 500,
+            ACCESS_TOKEN: '' 
+        }
     }
 }
 
@@ -51,4 +57,5 @@ export async function accessTokenCreator(data: any) {
     let concat = data.id + data.email + now
     let accessToken = cryptoJs.SHA256(concat)
     setAccessToken(data, accessToken.toString(cryptoJs.enc.Hex))
+    return accessToken.toString(cryptoJs.enc.Hex)
 }

@@ -8,13 +8,13 @@ const REDIRECT_URI = process.env.REDIRECT_URI_GOOGLE
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
 
 export const signInGoogleController = async (req: Request, res: Response, next: NextFunction) => {
-    console.log(REDIRECT_URI)
-    const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=profile email`;
-    res.redirect(url);
+  console.log(REDIRECT_URI)
+  const url = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=profile email`;
+  res.redirect(url);
 }
 
 export const callbackGoogleController = async (req: Request, res: Response, next: NextFunction) => {
-    const { code } = req.query;
+  const { code } = req.query;
 
   try {
     // Exchange authorization code for access token
